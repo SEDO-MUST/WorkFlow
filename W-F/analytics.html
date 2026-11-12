@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Workflow Manager</title>
+    <link rel="stylesheet" href="css-style.css">
+    <link rel="stylesheet" href="css-responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="nav-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fas fa-stream"></i>
+                 <h2>Enterprise Intelligence & Operations Platform <span>EIOP
+                </span></h2>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <div class="notification">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            <div class="user-profile">
+                <img src="assets/avatar.png" alt="User Avatar">
+                <span>Admin User</span>
+                <i class="fas fa-chevron-down"></i>
+                <div class="dropdown-menu">
+                    <a href="#"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-menu">
+            <div class="menu-header">MAIN</div>
+            <a href="dashboard.html" class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="workflows.html" class="menu-item">
+                <i class="fas fa-project-diagram"></i>
+                <span>All Workflows</span>
+                <span class="menu-badge">12</span>
+            </a>
+            <a href="tasks.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                <span>My Tasks</span>
+                <span class="menu-badge">5</span>
+            </a>
+            <a href="analytics.html" class="menu-item active">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+            
+            <div class="menu-header">MANAGEMENT</div>
+            <a href="workflow-detail.html" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create Workflow</span>
+            </a>
+            <a href="team.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>Team Members</span>
+            </a>
+            <a href="automations.html" class="menu-item">
+                <i class="fas fa-cogs"></i>
+                <span>Automations</span>
+            </a>
+            
+            <div class="menu-header">OTHER</div>
+            <a href="settings.html" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="help.html" class="menu-item">
+                <i class="fas fa-question-circle"></i>
+                <span>Help & Support</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <div class="header-left">
+                <h1>Analytics Dashboard</h1>
+                <p>Workflow performance insights and metrics</p>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="exportAnalyticsBtn">
+                    <i class="fas fa-file-export"></i> Export Report
+                </button>
+            </div>
+        </div>
+        
+        <!-- Date Range Filter -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label>Date Range:</label>
+                <select id="dateRange" class="dropdown">
+                    <option value="7days">Last 7 Days</option>
+                    <option value="30days" selected>Last 30 Days</option>
+                    <option value="90days">Last 90 Days</option>
+                    <option value="year">Last Year</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+                
+                <div id="customDateRange" style="display: none; gap: 10px; align-items: center;">
+                    <input type="date" id="startDate" class="dropdown">
+                    <span>to</span>
+                    <input type="date" id="endDate" class="dropdown">
+                    <button class="btn btn-outline" id="applyCustomRange">Apply</button>
+                </div>
+                
+                <select id="chartType" class="dropdown">
+                    <option value="overview">Overview</option>
+                    <option value="workflow">Workflow Specific</option>
+                    <option value="team">Team Performance</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Key Metrics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalWorkflows">12</h3>
+                    <p>Active Workflows</p>
+                </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 15%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="completionRate">78%</h3>
+                    <p>Completion Rate</p>
+                </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 5%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="avgCompletionTime">3.2</h3>
+                    <p>Avg. Days to Complete</p>
+                </div>
+                <div class="stat-trend down">
+                    <i class="fas fa-arrow-down"></i> 12%
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="bottleneckCount">4</h3>
+                    <p>Bottlenecks</p>
+                </div>
+                <div class="stat-trend neutral">
+                    <i class="fas fa-minus"></i> No change
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Workflow Completion Trend</h3>
+                    <div class="chart-legend">
+                        <span class="legend-item"><i class="fas fa-square" style="color: #4a6bff"></i> Completed</span>
+                        <span class="legend-item"><i class="fas fa-square" style="color: #ffc107"></i> In Progress</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="bar-chart" id="completionTrendChart">
+                            <!-- Bar chart will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Workflow Distribution</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="pie-chart" id="workflowDistributionChart">
+                            <!-- Pie chart will be generated by JavaScript -->
+                        </div>
+                        <div class="pie-legend" id="pieLegend"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Analytics -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Performance by Category</h3>
+                <button class="btn btn-outline" id="toggleChartView">
+                    <i class="fas fa-exchange-alt"></i> Switch to Table View
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" id="categoryChartContainer">
+                    <div class="line-chart" id="categoryPerformanceChart">
+                        <!-- Line chart will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="table-container" id="categoryTableContainer" style="display: none;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total Workflows</th>
+                                <th>Avg. Completion</th>
+                                <th>Success Rate</th>
+                                <th>Bottlenecks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTableBody">
+                            <!-- Table data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Performance -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Team Performance</h3>
+                <a href="#" class="btn-link">View Details</a>
+            </div>
+            <div class="card-body">
+                <div class="team-performance">
+                    <div class="team-member">
+                        <div class="member-info">
+                            <img src="assets/avatar.png" alt="John Doe">
+                            <div>
+                                <h4>John Doe</h4>
+                                <small>Workflow Manager</small>
+                            </div>
+                        </div>
+                        <div class="member-stats">
+                            <div class="stat">
+                                <span class="stat-value">42</span>
+                                <span class="stat-label">Tasks</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">92%</span>
+                                <span class="stat-label">Completion</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">2.8</span>
+                                <span class="stat-label">Avg. Days</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-info">
+                            <img src="assets/avatar.png" alt="Jane Smith">
+                            <div>
+                                <h4>Jane Smith</h4>
+                                <small>Approval Specialist</small>
+                            </div>
+                        </div>
+                        <div class="member-stats">
+                            <div class="stat">
+                                <span class="stat-value">38</span>
+                                <span class="stat-label">Tasks</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">88%</span>
+                                <span class="stat-label">Completion</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">3.5</span>
+                                <span class="stat-label">Avg. Days</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-info">
+                            <img src="assets/avatar.png" alt="Robert Johnson">
+                            <div>
+                                <h4>Robert Johnson</h4>
+                                <small>Review Specialist</small>
+                            </div>
+                        </div>
+                        <div class="member-stats">
+                            <div class="stat">
+                                <span class="stat-value">31</span>
+                                <span class="stat-label">Tasks</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">85%</span>
+                                <span class="stat-label">Completion</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">4.2</span>
+                                <span class="stat-label">Avg. Days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights & Recommendations -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Insights & Recommendations</h3>
+            </div>
+            <div class="card-body">
+                <div class="insights-list">
+                    <div class="insight-item">
+                        <div class="insight-icon success">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Approval workflows performing well</h4>
+                            <p>Your approval workflows have a 95% completion rate with an average of 2.1 days to complete.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-item">
+                        <div class="insight-icon warning">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Onboarding workflows need attention</h4>
+                            <p>Client onboarding workflows are taking 6.3 days on average. Consider automating document collection.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-item">
+                        <div class="insight-icon primary">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Opportunity for automation</h4>
+                            <p>30% of tasks in invoice processing are manual. Automation could save ~15 hours per week.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Export Options Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Export Analytics Report</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Report Format</label>
+                    <div class="radio-group">
+                        <label class="radio">
+                            <input type="radio" name="exportFormat" value="pdf" checked>
+                            <span>PDF Document</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="exportFormat" value="excel">
+                            <span>Excel Spreadsheet</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="exportFormat" value="csv">
+                            <span>CSV Data</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date Range</label>
+                    <select class="dropdown">
+                        <option>Last 30 Days (Current View)</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 90 Days</option>
+                        <option>Year to Date</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Include in Report</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span>Key Metrics</span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span>Charts & Graphs</span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Raw Data</span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span>Insights & Recommendations</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal">Cancel</button>
+                <button class="btn btn-primary" id="confirmExport">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js-auth.js"></script>
+    <script src="js-dashboard.js"></script>
+    <script src="js-analytics.js"></script>
+</body>
+</html>

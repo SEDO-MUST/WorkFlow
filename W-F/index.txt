@@ -1,12 +1,1 @@
-          </div>
-            <p>Sign in to manage your workflows</p>
-        </div>
-        
-        <form id="loginForm" class="login-form">
-            <div class="form-group">
-                <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="email" placeholder="admin@example.com" required>
-            </div>
-                        <div class="form-group">
-                <label for="password"><i class="fas fa-lock"></i> Password</label>
-               index is the login/ sigm up page interface , it sould be always user friendly , it should by ivaluated using the humen-computer interaction metrix .
+index is the login/ sigm up page interface , it sould be always user friendly , it should by ivaluated using the humen-computer interaction metrix 
